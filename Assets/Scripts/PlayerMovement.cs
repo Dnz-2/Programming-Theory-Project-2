@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 500.0f;
     private float jumpPower = 10000.0f;
     private float dashForce = 17000.0f;
+    private float rotateSpeed = 30.0f;
 
     private bool isOnGround;
     private bool dashCD;
@@ -42,8 +43,9 @@ public class PlayerMovement : MonoBehaviour
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
 
-        playerRb.AddForce(Vector3.forward * VerticalInput * speed * Time.deltaTime, ForceMode.Impulse);
-        playerRb.AddForce(Vector3.right * HorizontalInput * speed * Time.deltaTime, ForceMode.Impulse);
+        playerRb.AddForce(gameObject.transform.forward * VerticalInput * speed * Time.deltaTime, ForceMode.Impulse);
+        // playerRb.AddForce(Vector3.right * HorizontalInput * speed * Time.deltaTime, ForceMode.Impulse);
+        gameObject.transform.Rotate(Vector3.up * HorizontalInput * rotateSpeed * Time.deltaTime);
     }
 
     private void JumpPlayer()
@@ -69,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !dashCD)
         {
-            playerRb.AddForce(Vector3.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
+            playerRb.AddForce(gameObject.transform.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
             playerAudio.PlayOneShot(dashSound, 1.0f);
 
 

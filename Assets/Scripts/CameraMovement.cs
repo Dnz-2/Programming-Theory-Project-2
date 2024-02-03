@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject player;
-
+    public GameObject cameraPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +15,12 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + new Vector3(0, 54, -36);
+        PlaceCamera();
+    }
+
+    void PlaceCamera()
+    {
+        transform.position = cameraPosition.transform.position;
+        transform.eulerAngles = cameraPosition.transform.eulerAngles;
     }
 }
