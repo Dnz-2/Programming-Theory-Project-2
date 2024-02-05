@@ -18,7 +18,7 @@ public class CameraMovement : MonoBehaviour
         PlaceCamera();
     }
 
-    void PlaceCamera()
+    void PlaceCamera() // makes the camera follow the player
     {
         transform.position = cameraPosition.transform.position;
         transform.eulerAngles = cameraPosition.transform.eulerAngles;

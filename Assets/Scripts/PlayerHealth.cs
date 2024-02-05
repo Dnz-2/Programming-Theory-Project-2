@@ -22,11 +22,12 @@ public class PlayerHealth : MonoBehaviour
     {
         HealhAlwaysPositive(); // ABSTRACTION
         IsCharacterAlive(); // ABSTRACTION
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Boulder") && !hitCooldown)
+        if (collision.gameObject.CompareTag("Boulder") && !hitCooldown) // damages the player and gives him Iframes
         {
             health = health - 2;
             hitCooldown = true;
@@ -40,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
         hitCooldown=false;
     }
 
-    private void HealhAlwaysPositive()
+    private void HealhAlwaysPositive() // doesn't let player health go under 0
     {
         if(health < 0)
         {
@@ -48,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void IsCharacterAlive()
+    private void IsCharacterAlive() // doesn't let the player move after dying
     {
         if(health == 0)
         {
