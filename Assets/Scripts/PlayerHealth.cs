@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     private bool hitCooldown;
 
     public Behaviour playerMovement;
-
+    public Behaviour gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +33,13 @@ public class PlayerHealth : MonoBehaviour
             hitCooldown = true;
             StartCoroutine(Iframes());
         }
+
+        if(collision.gameObject.CompareTag("Enemy") && !hitCooldown)
+        {
+            health -= 2;
+            hitCooldown = true;
+            StartCoroutine(Iframes());
+        }
     }
 
     IEnumerator Iframes()
@@ -49,11 +56,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void IsCharacterAlive() // doesn't let the player move after dying
+    private void IsCharacterAlive() // doesn't let the player move after dying and stops spawning stuff
     {
         if(health == 0)
         {
             playerMovement.enabled = false;
+            gameManager.enabled = false;
         }
     }
 }

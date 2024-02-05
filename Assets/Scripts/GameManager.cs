@@ -5,12 +5,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject boulderPrefab;
+    public GameObject enemyPrefab;
 
     public GameObject[] healingFoods;
 
     private bool boulderSpawnCD;
     public bool playerInFloor;
     private bool foodSpawnCD;
+    private bool enemySpawnCD;
+    public bool victory;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour
         boulderSpawnCD = false;
         playerInFloor = true;
         foodSpawnCD = false;
+        enemySpawnCD = false;
     }
 
     // Update is called once per frame
@@ -25,6 +29,8 @@ public class GameManager : MonoBehaviour
     {
         BoulderSpawner(); // ABSTRACTION
         HealingFoodsSpawner(); // ABSTRACTION
+        SpawnEnemy(); // ABSTRACTION
+        VictoryAchieved(); // ABSTRACTION
     }
 
     private void BoulderSpawner()
@@ -63,5 +69,36 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(20);
         foodSpawnCD = false;
+    }
+
+    private void SpawnEnemy()
+    {
+        if(enemySpawnCD == false && playerInFloor == false)
+        {
+            Instantiate(enemyPrefab, new Vector3(0, 40, 437), transform.rotation);
+
+            enemySpawnCD = true;
+            StartCoroutine(EnemySpawnCooldown());
+        }
+    }
+
+    IEnumerator EnemySpawnCooldown()
+    {
+        yield return new WaitForSeconds(10);
+        enemySpawnCD = false;
+    }
+
+    private void VictoryAchieved()
+    {
+        if(playerInFloor == false)
+        {
+            StartCoroutine(SurvivalTimer());
+        }
+    }
+
+    IEnumerator SurvivalTimer()
+    {
+        yield return new WaitForSeconds(60);
+        victory = true;
     }
 }

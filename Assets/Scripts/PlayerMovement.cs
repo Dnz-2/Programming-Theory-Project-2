@@ -13,7 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private float HorizontalInput;
     private float VerticalInput;
 
-    private float speed = 500.0f;
+    private float Speed = 500.0f;
+    public float speed // ENCAPSULATION
+    {
+        get { return Speed; }
+        set { Speed = value; }
+    }
+
     private float jumpPower = 10000.0f;
     private float dashForce = 30000.0f;
     private float rotateSpeed = 50.0f;
